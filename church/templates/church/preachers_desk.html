@@ -1,0 +1,69 @@
+{% extends 'church/base.html' %}
+{% load static %}
+
+{% block title %}Preachers Desk{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'church/css/preachers_desk.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="preachers-desk-page">
+    <section class="preachers-desk-hero">
+        <div class="preachers-desk-hero-inner">
+            <p>Preachers Desk</p>
+            <h1>Messages for faith, worship, and daily living</h1>
+        </div>
+    </section>
+
+    <section class="preachers-desk-layout" aria-label="Preachers desk message">
+        {% if message %}
+        <article class="message-panel">
+            <header class="message-header">
+                <img class="preacher-headshot" src="{{ message.preacher_image_url }}" alt="{{ message.preacher_name }}">
+                <div>
+                    <p class="message-kicker">{{ message.section_title }}</p>
+                    <h2>{{ message.title }}</h2>
+                    <div class="message-meta">
+                        <span>{{ message.preacher_name }}</span>
+                        <span>{{ message.date_posted|date:"F j, Y" }}</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="message-body">
+                {{ message.body|linebreaks }}
+            </div>
+
+            {% if message.youtube_url %}
+            <a class="youtube-link" href="{{ message.youtube_url }}" target="_blank" rel="noopener">
+                Watch on YouTube
+            </a>
+            {% endif %}
+        </article>
+        {% else %}
+        <article class="message-panel empty-message">
+            <h2>No preacher messages yet</h2>
+            <p>Add an active preacher message in the admin dashboard and it will appear here.</p>
+        </article>
+        {% endif %}
+
+        <aside class="message-sidebar" aria-label="Other preacher messages">
+            <h2>Other Messages</h2>
+            <div class="message-list">
+                {% for sidebar_message in messages %}
+                <a
+                    class="message-list-item{% if message and sidebar_message.id == message.id %} is-active{% endif %}"
+                    href="{{ sidebar_message.get_absolute_url }}"
+                >
+                    <span>{{ sidebar_message.title }}</span>
+                    <small>{{ sidebar_message.preacher_name }} | {{ sidebar_message.date_posted|date:"M j, Y" }}</small>
+                </a>
+                {% empty %}
+                <p class="no-messages">No messages have been posted yet.</p>
+                {% endfor %}
+            </div>
+        </aside>
+    </section>
+</main>
+{% endblock %}

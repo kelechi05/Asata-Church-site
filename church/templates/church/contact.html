@@ -1,0 +1,105 @@
+{% extends 'church/base.html' %}
+{% load static %}
+
+{% block title %}Contact Us | St. Bartholomew's Anglican Church{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'church/css/contact.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="contact-page">
+    <section class="contact-hero">
+        <img src="{% static 'church/images/St.-Barts-Asata-Enugu.png' %}" alt="St. Bartholomew's Anglican Church building">
+        <div class="contact-hero-text">
+            <p>Contact Us</p>
+            <h2>We Would Love To Hear From You</h2>
+        </div>
+    </section>
+
+    <section class="contact-content">
+        <div class="contact-info">
+            <h2>Get In Touch</h2>
+            <div class="contact-list">
+                <article>
+                    <span>Email</span>
+                    {% if site_profile and site_profile.contact_email %}
+                    <a href="mailto:{{ site_profile.contact_email }}">{{ site_profile.contact_email }}</a>
+                    {% else %}
+                    <a href="mailto:info@gracechurch.org">info@gracechurch.org</a>
+                    {% endif %}
+                </article>
+
+                <article>
+                    <span>Phone</span>
+                    {% if site_profile and site_profile.contact_phone %}
+                    <a href="tel:{{ site_profile.contact_phone }}">{{ site_profile.contact_phone }}</a>
+                    {% else %}
+                    <p>Church office phone will be added soon.</p>
+                    {% endif %}
+                </article>
+
+                <article>
+                    <span>Address</span>
+                    <p>{% if site_profile %}{{ site_profile.address }}{% else %}Enugu, Nigeria{% endif %}</p>
+                </article>
+
+                <article>
+                    <span>Office Hours</span>
+                    <p>{% if site_profile and site_profile.office_hours %}{{ site_profile.office_hours }}{% else %}Monday to Friday, 9:00am - 4:00pm{% endif %}</p>
+                </article>
+            </div>
+        </div>
+
+        <aside class="contact-socials">
+            <h2>Social Media</h2>
+            <div class="social-links">
+                {% if site_profile and site_profile.facebook_url %}
+                <a href="{{ site_profile.facebook_url }}" target="_blank" rel="noopener">Facebook</a>
+                {% endif %}
+                {% if site_profile and site_profile.instagram_url %}
+                <a href="{{ site_profile.instagram_url }}" target="_blank" rel="noopener">Instagram</a>
+                {% endif %}
+                {% if site_profile and site_profile.youtube_url %}
+                <a href="{{ site_profile.youtube_url }}" target="_blank" rel="noopener">YouTube</a>
+                {% endif %}
+                {% if site_profile and site_profile.whatsapp_url %}
+                <a href="{{ site_profile.whatsapp_url }}" target="_blank" rel="noopener">WhatsApp</a>
+                {% endif %}
+                {% if not site_profile or not site_profile.facebook_url and not site_profile.instagram_url and not site_profile.youtube_url and not site_profile.whatsapp_url %}
+                <p>Social media handles will be added soon.</p>
+                {% endif %}
+            </div>
+        </aside>
+    </section>
+
+    <section class="contact-message">
+        <div>
+            <h2>Send A Message</h2>
+            <p>For prayers, visits, counselling, or church enquiries, send an email to the church office and we will respond as soon as possible.</p>
+        </div>
+        {% if site_profile and site_profile.contact_email %}
+        <a href="mailto:{{ site_profile.contact_email }}">Email The Church Office</a>
+        {% else %}
+        <a href="mailto:info@gracechurch.org">Email The Church Office</a>
+        {% endif %}
+    </section>
+
+    <section class="contact-directions">
+        <div class="directions-copy">
+            <span>Get Directions</span>
+            <h2>St. Bartholomew's Anglican Church</h2>
+            <p>Off Ogui Road, Asata area, Enugu State, Nigeria.</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=St.%20Bartholomew%27s%20Anglican%20Church%20Ogui%20Road%20Asata%20Enugu%20Nigeria" target="_blank" rel="noopener">Open In Google Maps</a>
+        </div>
+        <div class="directions-map">
+            <iframe
+                src="https://www.google.com/maps?q=St.%20Bartholomew%27s%20Anglican%20Church%20Ogui%20Road%20Asata%20Enugu%20Nigeria&output=embed"
+                title="Map showing St. Bartholomew's Anglican Church, Asata, Enugu"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </section>
+</main>
+{% endblock %}

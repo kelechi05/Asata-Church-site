@@ -1,0 +1,83 @@
+{% extends 'church/base.html' %}
+{% load static %}
+
+{% block title %}Mission & Vision | St. Bartholomew's Anglican Church{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'church/css/mission_vision.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <section class="mission-hero">
+        <img src="{% static 'church/images/St.-Barts-Asata-Enugu.png' %}" alt="St. Bartholomew's Anglican Church building">
+        <div class="mission-hero-text">
+            <p>Our Purpose</p>
+            <h2>Mission & Vision</h2>
+        </div>
+    </section>
+
+    <section class="mission-intro">
+        <h2>Called To Worship, Sent To Serve</h2>
+        <p>
+            St. Bartholomew's Anglican Church exists to glorify God, build faithful disciples of Jesus Christ,
+            and serve our community through worship, teaching, fellowship, evangelism, and compassionate care.
+        </p>
+    </section>
+
+    <section class="purpose-grid">
+        <article class="purpose-panel">
+            <span>Mission</span>
+            <h2>Making Christ Known</h2>
+            <p>
+                To proclaim the Gospel of Jesus Christ, nurture believers in the Anglican faith, and raise a
+                Christ-centered community that lives by Scripture, prayer, love, and practical service.
+            </p>
+        </article>
+
+        <article class="purpose-panel purpose-panel-dark">
+            <span>Vision</span>
+            <h2>A Faithful And Growing Church Family</h2>
+            <p>
+                To be a spiritually vibrant parish where people encounter God, grow in holiness, discover their
+                gifts, and become witnesses of Christ's love in Enugu and beyond.
+            </p>
+        </article>
+    </section>
+
+    <section class="values-band">
+        <h2>How We Live It Out</h2>
+        <div class="values-grid">
+            <article>
+                <h3>Worship</h3>
+                <p>We gather around Word, Sacrament, prayer, praise, and reverence for God.</p>
+            </article>
+            <article>
+                <h3>Discipleship</h3>
+                <p>We help believers grow in Scripture, spiritual discipline, and Christlike character.</p>
+            </article>
+            <article>
+                <h3>Fellowship</h3>
+                <p>We build a caring parish family where every generation can belong and serve.</p>
+            </article>
+            <article>
+                <h3>Evangelism</h3>
+                <p>We share the Gospel with courage, humility, and practical love for our neighbours.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="commitment-section">
+        <div class="commitment-photo">
+            <img src="{% static 'church/images/worshippers3.jfif' %}" alt="Church worshippers gathered together">
+        </div>
+        <div class="commitment-copy">
+            <h2>Our Continuing Commitment</h2>
+            <p>
+                We seek to remain Bible-based, Spirit-led, united, disciplined, and active in service. By God's
+                grace, our mission and vision continue to shape every ministry, gathering, and act of care.
+            </p>
+        </div>
+    </section>
+</main>
+{% endblock %}

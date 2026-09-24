@@ -1,0 +1,130 @@
+{% extends 'church/base.html' %}
+{% load static %}
+
+{% block title %}{{ department.name }} | St. Bartholomew's Anglican Church{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'church/css/department.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="department-page">
+    <section class="department-hero">
+        {% if department.hero_image %}
+        <img src="{{ department.hero_image_url }}" alt="{{ department.name }}">
+        {% else %}
+        <img src="{% static 'church/images/St.-Barts-Asata-Enugu.png' %}" alt="{{ department.name }}">
+        {% endif %}
+        <div class="department-hero-text">
+            <p>Department</p>
+            <h2>{{ department.name }}</h2>
+            {% if department.tagline %}
+            <span>{{ department.tagline }}</span>
+            {% endif %}
+        </div>
+    </section>
+
+    <section class="department-leadership">
+        <article class="department-person">
+            {% if department.leader_image %}
+            <img src="{{ department.leader_image_url }}" alt="{{ department.leader_name }}">
+            {% else %}
+            <img src="{% static 'church/images/worshippers.jfif' %}" alt="{{ department.leader_name|default:department.name }}">
+            {% endif %}
+            <div>
+                <span>{{ department.leader_title }}</span>
+                <h3>{{ department.leader_name|default:"Department Leader" }}</h3>
+            </div>
+        </article>
+
+        <article class="department-person">
+            {% if department.executives_image %}
+            <img src="{{ department.executives_image_url }}" alt="{{ department.executives_title }}">
+            {% else %}
+            <img src="{% static 'church/images/worshippers2.jfif' %}" alt="{{ department.executives_title }}">
+            {% endif %}
+            <div>
+                <span>Team</span>
+                <h3>{{ department.executives_title }}</h3>
+            </div>
+        </article>
+    </section>
+
+    <section class="department-overview">
+        <article class="department-intro">
+            <h2>Who We Are</h2>
+            {{ department.introduction|linebreaks }}
+        </article>
+
+        <div class="activity-slider" data-activity-slider aria-label="{{ department.name }} activity photos">
+            <div class="activity-slider-viewport">
+                <div class="activity-slider-track">
+                    {% for photo in department.activity_photos.all %}
+                    <figure class="activity-slide">
+                        <img src="{{ photo.image_url }}" alt="{{ photo.caption|default:department.name }}">
+                        {% if photo.caption %}
+                        <figcaption>{{ photo.caption }}</figcaption>
+                        {% endif %}
+                    </figure>
+                    {% empty %}
+                    <figure class="activity-slide">
+                        <img src="{% static 'church/images/worshippers3.jfif' %}" alt="{{ department.name }} activities">
+                    </figure>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="department-activities">
+        <h2>Weekly And Monthly Activities</h2>
+        <div class="activity-article-grid">
+            {% for article in department.activity_articles.all %}
+            <article class="activity-article">
+                <span>{{ article.frequency }}</span>
+                <h3>{{ article.title }}</h3>
+                {{ article.body|linebreaks }}
+            </article>
+            {% empty %}
+            <article class="activity-article">
+                <span>Activities</span>
+                <h3>{{ department.name }}</h3>
+                <p>Activities for this department will be announced soon.</p>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="department-events">
+        <h2>Upcoming Events</h2>
+        <div class="event-grid">
+            {% for event in department.events.all %}
+            <article class="event-card">
+                <time datetime="{{ event.date|date:'Y-m-d' }}">{{ event.date|date:"M j, Y" }}</time>
+                <h3>{{ event.title }}</h3>
+                {% if event.time or event.venue %}
+                <p class="event-meta">
+                    {% if event.time %}{{ event.time }}{% endif %}
+                    {% if event.time and event.venue %} &middot; {% endif %}
+                    {% if event.venue %}{{ event.venue }}{% endif %}
+                </p>
+                {% endif %}
+                {% if event.description %}
+                <p>{{ event.description }}</p>
+                {% endif %}
+            </article>
+            {% empty %}
+            <article class="event-card">
+                <time>Coming Soon</time>
+                <h3>No upcoming events yet</h3>
+                <p>Upcoming events for this department will appear here.</p>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'church/javascript/department.js' %}" defer></script>
+{% endblock %}

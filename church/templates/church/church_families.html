@@ -1,0 +1,83 @@
+{% extends 'church/base.html' %}
+{% load static %}
+
+{% block title %}Church Families | St. Bartholomew's Anglican Church{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'church/css/church_families.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="families-page">
+    <section class="families-hero">
+        <img src="{% static 'church/images/worshippers3.jfif' %}" alt="Church families worshipping together">
+        <div class="families-hero-text">
+            <p>Our Fellowship Groups</p>
+            <h2>Church Families</h2>
+        </div>
+    </section>
+
+    <section class="families-list" aria-label="Church family groups">
+        {% for family in families %}
+        <article class="family-row" id="{{ family.slug }}">
+            <div class="family-copy">
+                <span>{{ family.meaning }}</span>
+                <h2>{{ family.name }} Family</h2>
+                <div class="family-body">
+                    {{ family.body|linebreaks }}
+                </div>
+
+                <div class="family-leaders" aria-label="{{ family.name }} group leaders">
+                    <div class="family-leader">
+                        <img src="{{ family.male_leader_image_url }}" alt="{{ family.name }} male group leader">
+                        <p>{{ family.male_leader_name }}</p>
+                    </div>
+                    <div class="family-leader">
+                        <img src="{{ family.female_leader_image_url }}" alt="{{ family.name }} female group leader">
+                        <p>{{ family.female_leader_name }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="family-photo family-slider" data-family-slider aria-label="{{ family.name }} family photos">
+                <div class="family-slider-track">
+                    {% for slide in family.slider_images.all %}
+                    <figure class="family-slide">
+                        <img src="{{ slide.image_url }}" alt="{{ family.name }} family group">
+                        {% if slide.write_up %}
+                        <figcaption>{{ slide.write_up|linebreaks }}</figcaption>
+                        {% endif %}
+                    </figure>
+                    {% empty %}
+                    <figure class="family-slide">
+                        <img src="{{ family.image_url }}" alt="{{ family.name }} family group">
+                    </figure>
+                    {% endfor %}
+                </div>
+            </div>
+        </article>
+        {% empty %}
+        <article class="family-row family-row-empty">
+            <div class="family-copy">
+                <span>Church Families</span>
+                <h2>Families Coming Soon</h2>
+                <div class="family-body">
+                    <p>Church family groups will appear here once they are added in the admin.</p>
+                </div>
+            </div>
+            <div class="family-photo family-slider">
+                <div class="family-slider-track">
+                    <figure class="family-slide">
+                        <img src="{% static 'church/images/worshippers3.jfif' %}" alt="Church families">
+                    </figure>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'church/javascript/church_families.js' %}" defer></script>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% load static %}
+<nav>
+    {% if site_profile %}
+    <img src="{% static site_profile.logo_path %}" alt="Grace Church Logo" class="logo">
+    <h1>{{ site_profile.church_name }}<br><span>{{ site_profile.church_subtitle }}</span></h1>
+    {% else %}
+    <img src="{% static 'church/images/images.png' %}" alt="St. Bartholomew's Anglican Church Logo" class="logo">
+    <h1>St. Bartholomew's<br><span>Anglican Church Enugu.</span></h1>
+    {% endif %}
+
+    <input type="checkbox" id="site-menu-toggle" class="nav-check">
+    <label class="menu-toggle" for="site-menu-toggle">&#9776;</label>
+
+    <ul id="nav-links">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li class="has-dropdown">
+            <a href="#">About Us</a>
+            <ul class="dropdown">
+                <li><a href="{% url 'our_history' %}">Our History</a></li>
+                <li><a href="{% url 'mission_vision' %}">Mission & Vision</a></li>
+                <li><a href="{% url 'clergies' %}">The Clergies</a></li>
+                <li><a href="#">The PCC</a></li>
+                <li><a href="#">Our Programs</a></li>
+            </ul>
+        </li>
+        <li class="has-dropdown">
+            <a href="#">Departments</a>
+            <ul class="dropdown">
+                {% for department in nav_departments %}
+                <li><a href="{% url 'department_detail' department.slug %}">{{ department.name }}</a></li>
+                {% empty %}
+                <li><a href="#">Mens Fellowship</a></li>
+                <li><a href="#">Womens Fellowship</a></li>
+                <li><a href="#">Anglican Youth Fellowship</a></li>
+                <li><a href="#">The Choir</a></li>
+                <li><a href="#">Efac Fellowship</a></li>
+                <li><a href="#">Anglican Children Ministry</a></li>
+                <li><a href="#">The Girls Guild</a></li>
+                <li><a href="#">The Ushering Team</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+        <li><a href="{% url 'contact' %}">Contact Us</a></li>
+        <li class="has-dropdown">
+            <a href="{% url 'church_families' %}">Church Families</a>
+            <ul class="dropdown">
+                <li><a href="{% url 'church_families' %}#ifunanya">Ifunanya - Love Group</a></li>
+                <li><a href="{% url 'church_families' %}#okwukwe">Okwukwe - Faith Group</a></li>
+                <li><a href="{% url 'church_families' %}#amara">Amara - Grace Group</a></li>
+                <li><a href="{% url 'church_families' %}#udoka">Udoka - Peace Group</a></li>
+            </ul>
+        </li>
+        <li><a href="{% url 'preachers_desk' %}">Preachers Desk</a></li>
+        <li><a href="#">Gallery</a></li>
+    </ul>
+</nav>

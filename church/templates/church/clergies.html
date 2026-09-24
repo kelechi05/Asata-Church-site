@@ -1,0 +1,54 @@
+{% extends 'church/base.html' %}
+{% load static %}
+
+{% block title %}The Clergies | St. Bartholomew's Anglican Church{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'church/css/clergies.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <section class="clergy-hero">
+        <img src="{% static 'church/images/St.-Barts-Asata-Enugu.png' %}" alt="St. Bartholomew's Anglican Church building">
+        <div class="clergy-hero-text">
+            <p>Our Spiritual Leaders</p>
+            <h2>The Clergies</h2>
+        </div>
+    </section>
+
+    <section class="lead-pastor-section">
+        <h2>Lead Pastor</h2>
+        {% if lead_pastor %}
+        <article class="lead-pastor-card">
+            <div class="lead-pastor-photo">
+                <img src="{{ lead_pastor.image_url }}" alt="{{ lead_pastor.name }}">
+            </div>
+            <div class="lead-pastor-copy">
+                <span>{{ lead_pastor.position }}</span>
+                <h3>{{ lead_pastor.name }}</h3>
+            </div>
+        </article>
+        {% else %}
+        <p class="empty-clergy">No clergy profile has been added yet.</p>
+        {% endif %}
+    </section>
+
+    {% if other_pastors %}
+    <section class="pastors-section">
+        <h2>Other Pastors</h2>
+        <div class="pastors-grid">
+            {% for pastor in other_pastors %}
+            <article class="pastor-card">
+                <img src="{{ pastor.image_url }}" alt="{{ pastor.name }}">
+                <div class="pastor-card-copy">
+                    <h3>{{ pastor.name }}</h3>
+                    <p>{{ pastor.position }}</p>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+</main>
+{% endblock %}

@@ -1,0 +1,157 @@
+{% extends 'church/base.html' %}
+{% load static %}
+ 
+{% block title %}St. Bartholomew's Aglican Church, Asata Enugu{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'church/css/front.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- ===== SLIDER ===== -->
+<div class="slider">
+    <div class="slides" id="slides">
+        {% for slide in slides %}
+        <div class="slide">
+            {% if slide.video_path %}
+            <video src="{{ slide.video_url }}" autoplay muted loop playsinline></video>
+            {% else %}
+            <img src="{{ slide.image_url }}" alt="">
+            {% endif %}
+            <div class="slide-text">{{ slide.title|linebreaksbr }}</div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="slider-buttons">
+        <button onclick="prevSlide()">&#10094;</button>
+        <button onclick="nextSlide()">&#10095;</button>
+    </div>
+</div>
+
+<!-- ===== ABOUT ===== -->
+<section id="about" class="about">
+    <h1>{{ site_profile.welcome_heading }}</h1>
+    <p>{{ site_profile.welcome_text }}</p>
+</section>
+
+<section class="faith-path">
+    <h2>Join us in Worship</h2>
+    <div class="faith-card-grid">
+        {% for card in faith_cards %}
+        <article class="faith-card" tabindex="0">
+            <h2>{{ card.title }}</h2>
+            {% for detail in card.details.all %}
+            <div class="faith-card-details">
+                <h3>{{ detail.title }}</h3>
+                <ul>
+                    {% for line in detail.content_lines %}
+                    <li>{{ line }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ===== MINISTRIES ===== -->
+<section id="ministries" class="ministries">
+    <div class="ministry-grid">
+        <div class="ministry-card core-values-card">
+            <h3>Our Core Values</h3>
+        </div>
+        <div class="ministry-card">
+            <div class="ministry-card">
+                <ul>
+                    {% for value in core_values %}
+                    <li><strong>{{ value.title }}</strong><span class="value-detail">{{ value.detail }}</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="weekly" class="weekly">
+    <h1>Weekly Activities</h1>
+    <div class="weekly-grid">
+        {% for day_group in weekly_activities %}
+        <div class="weekly-card">
+            <h3>{{ day_group.day }}</h3>
+            <ul>
+                {% for activity in day_group.activities %}
+                <li>{{ activity.activity }}: {{ activity.time }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="live-cta" aria-label="Live service invitation">
+    <a class="live-cta-button" href="#live-services">Watch Live Services</a>
+</section>
+
+<section id="live-services" class="live-services">
+    <div class="live-video">
+        <!-- Replace CHANNEL_ID with the church YouTube channel ID. -->
+        <iframe
+            src="https://www.youtube.com/shorts/URXsWWWoTfk"
+            title="Live services on YouTube"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+        </iframe>
+    </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="praecher" class="preacher">
+    {% if preacher_message %}
+    <div class="preacher-card preacher-image">
+        <h2>{{ preacher_message.section_title }}</h2>
+        <div class="preacher-slot">
+            <img src="{{ preacher_message.preacher_image_url }}" height="200" width="200" alt="{{ preacher_message.preacher_name }}">
+        </div>
+    </div>
+    <div class="preacher-card preacher-copy">
+        <h2>{{ preacher_message.title }}</h2>
+        <p>{{ preacher_message.body }}</p>
+        <a class="preacher-button" href="{{ preacher_message.get_absolute_url }}">{{ preacher_message.button_text }}</a>
+    </div>
+    {% if preacher_message.youtube_embed_url %}
+    <div class="preacher-card preacher-video">
+        <h2>Watch Message</h2>
+        <div class="preacher-video-frame" data-youtube-player>
+            <button
+                class="preacher-video-thumb"
+                type="button"
+                data-youtube-src="{{ preacher_message.youtube_embed_url }}?autoplay=1"
+                aria-label="Play {{ preacher_message.title }}"
+            >
+                <img src="{{ preacher_message.youtube_thumbnail_url }}" alt="{{ preacher_message.title }}">
+                <span class="preacher-video-play" aria-hidden="true"></span>
+            </button>
+            <iframe
+                data-src="{{ preacher_message.youtube_embed_url }}"
+                title="{{ preacher_message.title }}"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+            </iframe>
+        </div>
+        
+    </div>
+    {% elif preacher_message.youtube_url %}
+    <div class="preacher-card preacher-video">
+        <h2>Watch Message</h2>
+        <a class="preacher-youtube-link" href="{{ preacher_message.youtube_url }}" target="_blank" rel="noopener">Watch on YouTube</a>
+    </div>
+    {% endif %}
+    {% endif %}
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'church/javascript/front.js' %}" defer></script>
+{% endblock %}

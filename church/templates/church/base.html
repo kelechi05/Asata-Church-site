@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% if site_profile %}
+<link rel="icon" type="image/png" href="{% static site_profile.logo_path %}">
+{% else %}
+<link rel="icon" type="image/png" href="{% static 'church/images/images.png' %}">
+{% endif %}
+<link rel="stylesheet" href="{% static 'church/css/layout.css' %}">
+{% block styles %}{% endblock %}
+<title>{% block title %}St. Bartholomew's Anglican Church{% endblock %}</title>
+</head>
+
+<body>
+{% include 'church/partials/_header.html' %}
+{% block content %}{% endblock %}
+{% include 'church/partials/_footer.html' %}
+{% block scripts %}{% endblock %}
+</body>
+</html>

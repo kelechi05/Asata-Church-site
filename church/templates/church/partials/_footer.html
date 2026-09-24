@@ -1,0 +1,49 @@
+{% load static %}
+<footer>
+    <div class="footer-top">
+        <div class="footer-block footer-block-main">
+            {% if site_profile %}
+            <img src="{% static site_profile.logo_path %}" alt="Grace Church Logo" class="footer-logo">
+            <h1>{{ site_profile.church_name }}<br><span>{{ site_profile.church_subtitle }}</span></h1>
+            <p>{{ site_profile.footer_tagline }}</p>
+            {% else %}
+            <img src="{% static 'church/images/images.png' %}" alt="St. Bartholomew's Anglican Church Logo" class="footer-logo">
+            <h1>St. Bartholomew's<br><span>Anglican Church Enugu.</span></h1>
+            <p>Raising a worshipping, word-grounded, and Christ-centered community.</p>
+            {% endif %}
+        </div>
+        <div class="footer-block">
+            <h4>Worship</h4>
+            <p>Sunday Services</p>
+        </div>
+        <div class="footer-block">
+            <h4>Contact</h4>
+            <p>{% if site_profile %}{{ site_profile.contact_email }}{% else %}info@gracechurch.org{% endif %}</p>
+        </div>
+        <div class="footer-block">
+            <h4>Address</h4>
+            <p>{% if site_profile %}{{ site_profile.address }}{% else %}Enugu, Nigeria{% endif %}</p>
+        </div>
+        <div class="footer-block">
+            <h4>Social Media</h4>
+            <div class="footer-social-links">
+                {% if site_profile and site_profile.facebook_url %}
+                <a href="{{ site_profile.facebook_url }}" target="_blank" rel="noopener">Facebook</a>
+                {% endif %}
+                {% if site_profile and site_profile.instagram_url %}
+                <a href="{{ site_profile.instagram_url }}" target="_blank" rel="noopener">Instagram</a>
+                {% endif %}
+                {% if site_profile and site_profile.youtube_url %}
+                <a href="{{ site_profile.youtube_url }}" target="_blank" rel="noopener">YouTube</a>
+                {% endif %}
+                {% if site_profile and site_profile.whatsapp_url %}
+                <a href="{{ site_profile.whatsapp_url }}" target="_blank" rel="noopener">WhatsApp</a>
+                {% endif %}
+                {% if not site_profile or not site_profile.facebook_url and not site_profile.instagram_url and not site_profile.youtube_url and not site_profile.whatsapp_url %}
+                <p>Coming soon</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <p>&copy; <span id="year">{% now "Y" %}</span> St. Bartholomew's Enugu. All Rights Reserved.</p>
+</footer>

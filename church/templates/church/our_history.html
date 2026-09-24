@@ -1,0 +1,79 @@
+{% extends 'church/base.html' %}
+{% load static %}
+
+{% block title %}Our History | St. Bartholomew's Anglican Church{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'church/css/history.css' %}">
+{% endblock %}
+
+{% block content %}
+<main>
+    <section class="history-hero">
+        <img src="{% static 'church/images/St.-Barts-Asata-Enugu.png' %}" alt="St. Bartholomew's Anglican Church building">
+        <div class="history-hero-text">
+            <p>Our Story</p>
+            <h2>Built By Faith, Kept By Grace</h2>
+        </div>
+    </section>
+
+    <section class="history-intro">
+        <h2>Our History</h2>
+        <p>
+            St. Bartholomew's Anglican Church, Enugu has grown as a worshipping family shaped by prayer,
+            fellowship, service, and the steady proclamation of the Gospel. From its early gatherings to its
+            present life as a parish community, the church has remained committed to raising disciples who
+            love Christ and serve their neighbours with humility.
+        </p>
+    </section>
+
+    <section class="history-feature">
+        <div class="history-photo">
+            <img src="{% static 'church/images/worshippers.jfif' %}" alt="Church members worshipping together">
+        </div>
+        <div class="history-copy">
+            <h2>A Parish With A Living Witness</h2>
+            <p>
+                Across generations, members have gathered around Word and Sacrament, built ministries for
+                children, youth, women, men, and families, and carried the light of Christ into the community.
+                The story of the church is not only held in dates and buildings, but in lives changed, homes
+                strengthened, and faith handed from one generation to the next.
+            </p>
+        </div>
+    </section>
+
+    <section class="timeline-section">
+        <h2>Journey Of Faith</h2>
+        <div class="timeline-grid">
+            <article class="timeline-card">
+                <span>Foundation</span>
+                <h3>Faithful Beginnings</h3>
+                <p>The church began with a shared hunger for worship, teaching, and Anglican fellowship.</p>
+            </article>
+            <article class="timeline-card">
+                <span>Growth</span>
+                <h3>A Stronger Parish Family</h3>
+                <p>Families, groups, and ministries grew as the church became a place of care and belonging.</p>
+            </article>
+            <article class="timeline-card">
+                <span>Service</span>
+                <h3>Witness In The Community</h3>
+                <p>The parish continued serving through evangelism, social concern, discipleship, and prayer.</p>
+            </article>
+            <article class="timeline-card">
+                <span>Today</span>
+                <h3>Living For His Glory</h3>
+                <p>The church keeps pressing forward as a Christ-centered family rooted in Scripture and love.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="legacy-band">
+        <h2>Our Legacy Continues</h2>
+        <p>
+            We honour those who laboured before us by continuing in worship, unity, discipline, evangelism,
+            and compassionate service. Our history is still being written by every act of faithfulness today.
+        </p>
+    </section>
+</main>
+{% endblock %}
