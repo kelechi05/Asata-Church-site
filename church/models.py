@@ -43,6 +43,10 @@ def youtube_embed_url(url):
     return f"https://www.youtube.com/embed/{video_id}" if video_id else ""
 
 
+def iframe_embed_url(url):
+    return youtube_embed_url(url) or url
+
+
 def youtube_thumbnail_url(url):
     video_id = youtube_video_id(url)
     return f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg" if video_id else ""
@@ -164,6 +168,29 @@ class WeeklyActivity(models.Model):
 
     def __str__(self):
         return f"{self.day}: {self.activity}"
+
+
+class LiveService(models.Model):
+    title = models.CharField(max_length=120, default="Live services on YouTube")
+    video_url = models.URLField(
+        default="https://www.youtube.com/shorts/URXsWWWoTfk",
+        help_text=(
+            "Paste the live service video link. YouTube watch, shorts, live, "
+            "and embed links are converted automatically."
+        ),
+    )
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["order", "id"]
+
+    def __str__(self):
+        return self.title
+
+    @property
+    def embed_url(self):
+        return iframe_embed_url(self.video_url)
 
 
 class ClergyProfile(models.Model):

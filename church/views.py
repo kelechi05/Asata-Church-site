@@ -12,6 +12,7 @@ from .models import (
     DepartmentEvent,
     FaithCardDetail,
     FaithCardGrid,
+    LiveService,
     PreacherMessage,
     SiteProfile,
     Slide,
@@ -37,6 +38,7 @@ def home(request):
             Prefetch("details", queryset=FaithCardDetail.objects.filter(is_active=True))
         ),
         "weekly_activities": weekly_activities,
+        "live_service": LiveService.objects.filter(is_active=True).first(),
         "preacher_message": PreacherMessage.objects.filter(
             is_active=True,
             show_on_homepage=True,

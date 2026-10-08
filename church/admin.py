@@ -11,6 +11,7 @@ from .models import (
     DepartmentEvent,
     FaithCardDetail,
     FaithCardGrid,
+    LiveService,
     PreacherMessage,
     SiteProfile,
     Slide,
@@ -76,6 +77,17 @@ class WeeklyActivityAdmin(admin.ModelAdmin):
     list_filter = ("day", "is_active")
     list_editable = ("order", "is_active")
     search_fields = ("day", "activity", "time")
+
+
+@admin.register(LiveService)
+class LiveServiceAdmin(admin.ModelAdmin):
+    fieldsets = (
+        ("Live service", {"fields": ("title", "video_url")}),
+        ("Display", {"fields": ("order", "is_active")}),
+    )
+    list_display = ("title", "video_url", "order", "is_active")
+    list_editable = ("order", "is_active")
+    search_fields = ("title", "video_url")
 
 
 @admin.register(ClergyProfile)

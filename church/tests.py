@@ -1,6 +1,13 @@
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
-from .models import Department, FaithCardDetail, FaithCardGrid
+from .models import Department, FaithCardDetail, FaithCardGrid, LiveService
+
+
+TEST_STORAGES = {
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
 
 
 class FaithCardModelsTest(TestCase):
@@ -18,6 +25,7 @@ class FaithCardModelsTest(TestCase):
         self.assertEqual(detail.content_lines(), ["Praise and prayer", "Word and Sacrament"])
 
 
+@override_settings(STORAGES=TEST_STORAGES)
 class DepartmentPageTest(TestCase):
     def test_department_detail_page_renders_reusable_sections(self):
         Department.objects.filter(slug="the-choir").update(
@@ -33,6 +41,34 @@ class DepartmentPageTest(TestCase):
         self.assertContains(response, "Upcoming Events")
 
 
+@override_settings(STORAGES=TEST_STORAGES)
+class LiveServiceTest(TestCase):
+    def test_live_service_converts_youtube_links_for_iframe(self):
+        live_service = LiveService.objects.create(
+            title="Sunday Live",
+            video_url="https://www.youtube.com/watch?v=URXsWWWoTfk",
+        )
+
+        self.assertEqual(
+            live_service.embed_url,
+            "https://www.youtube.com/embed/URXsWWWoTfk",
+        )
+
+    def test_homepage_renders_live_service_iframe_from_admin_content(self):
+        LiveService.objects.all().delete()
+        LiveService.objects.create(
+            title="Sunday Live",
+            video_url="https://youtu.be/URXsWWWoTfk",
+        )
+
+        response = self.client.get("/")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'src="https://www.youtube.com/embed/URXsWWWoTfk"')
+        self.assertContains(response, 'title="Sunday Live"')
+
+
+@override_settings(STORAGES=TEST_STORAGES)
 class ContactPageTest(TestCase):
     def test_contact_page_renders_contact_and_social_sections(self):
         response = self.client.get("/contact/")

@@ -90,21 +90,22 @@
     </div>
 </section>
 
+{% if live_service and live_service.embed_url %}
 <section class="live-cta" aria-label="Live service invitation">
     <a class="live-cta-button" href="#live-services">Watch Live Services</a>
 </section>
 
 <section id="live-services" class="live-services">
     <div class="live-video">
-        <!-- Replace CHANNEL_ID with the church YouTube channel ID. -->
         <iframe
-            src="https://www.youtube.com/shorts/URXsWWWoTfk"
-            title="Live services on YouTube"
+            src="{{ live_service.embed_url }}"
+            title="{{ live_service.title }}"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen>
         </iframe>
     </div>
 </section>
+{% endif %}
 
 <!-- ===== CONTACT ===== -->
 <section id="praecher" class="preacher">
